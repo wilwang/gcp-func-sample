@@ -3,7 +3,7 @@ import calendar
 import requests
 import os
 import io
-from gcloud import storage
+from google.cloud import storage
 
 # Cloud function have access to ./tmp/ for temporary storage
 WORK_DIR = './tmp/'

@@ -1,2 +1,2 @@
-gcloud==0.18.3
+google-cloud-storage==2.5.0
 requests==2.28.1

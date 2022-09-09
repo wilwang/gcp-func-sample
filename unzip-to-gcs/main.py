@@ -3,7 +3,7 @@ import functions_framework
 import zipfile
 import glob
 import io
-from gcloud import storage
+from google.cloud import storage
 
 # Cloud function have access to ./tmp/ for temporary storage
 WORK_DIR = './tmp/'
