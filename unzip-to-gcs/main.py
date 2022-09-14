@@ -9,7 +9,6 @@ from google.cloud import storage
 WORK_DIR = './tmp/'
 PROJECT_ID = os.environ.get('GCP_PROJECT', '')
 GCS_BUCKET = os.environ.get('GCS_BUCKET_NAME', '')
-GCS_FOLDER = os.environ.get('GCS_FOLDER', 'unzipped/')
 
 def download_from_gcs(bucket, file):
     fpath = f'{WORK_DIR}{file}'
@@ -33,7 +32,7 @@ def upload_to_gcs(filepath):
     client = storage.Client(
         project=PROJECT_ID
     )
-    filename = f'{GCS_FOLDER}{os.path.basename(filepath)}'
+    filename = os.path.basename(filepath)
     bucket = client.bucket(GCS_BUCKET)
     blob = storage.Blob(filename, bucket, chunk_size=262144)
     blob.upload_from_filename(filepath)
