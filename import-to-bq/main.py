@@ -96,14 +96,6 @@ def handle_gcs_event(cloud_event):
     bucket = data['bucket']
     file = data['name']
 
-    print(PROJECT_ID)
-    print(GCS_BUCKET)
-    print(BQ_DATASET)
-    print(BQ_TABLE)
-
-    print(bucket)
-    print(file)
-
     try:
         #include '.csv' JUST IN CASE we encounter another \d{4}_\d{2} in the file name
         dt_str = re.findall(r'\d{4}_\d{2}.csv', file)[0].replace('.csv', '')
@@ -111,8 +103,6 @@ def handle_gcs_event(cloud_event):
         # add '01' at the end to enable bq to index tables by date; needs YYYYMMDD format
         fmt_dt = file_dt.strftime('%Y%m01')
         table_id = f'{PROJECT_ID}.{BQ_DATASET}.{BQ_TABLE}_{fmt_dt}'
-
-        print(table_id)
 
         data = read_from_gcs(bucket, file)
         df = clean_data(data)
