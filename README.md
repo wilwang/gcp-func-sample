@@ -42,13 +42,10 @@ Give the service account roles required for these set of demo functions (Cloud F
 $ gcloud iam service-accounts create some-account-name --display-name="My Service Account" 
 
 # Grant project level roles
-$ gcloud projects PROJECT_ID \ 
-    --member='serviceAccount:some-account-name@project.iam.gserviceaccount.com' \
-    --role='roles/cloudfunctions.invoker' \
-    --role='roles/run.invoker' \
-    --role='roles/storage.legacyBucketOwner' \
-    --role='roles/storage.legacyObjectOwner' \
-    --role='roles/bigquery.jobUser'
+$ gcloud projects add-iam-policy-binding PROJECT_ID --member='serviceAccount:some-account-name@project.iam.gserviceaccount.com' --role='roles/cloudfunctions.invoker' 
+$ gcloud projects add-iam-policy-binding PROJECT_ID --member='serviceAccount:some-account-name@project.iam.gserviceaccount.com' --role='roles/run.invoker' 
+$ gcloud projects add-iam-policy-binding PROJECT_ID --member='serviceAccount:some-account-name@project.iam.gserviceaccount.com' --role='roles/bigquery.jobUser'
+
 
 # Grant roles specifically for the storage buckets
 $ gsutil iam ch serviceAccount:some-account-name@project.iam.gserviceaccount.com:legacyBucketOwner gs://BUCKET_NAME
@@ -66,9 +63,7 @@ Eventarc triggers leverage Pub/Sub, so the Pub/Sub publisher role must be provid
 ```
 $ SERVICE_ACCOUNT="$(gsutil kms serviceaccount -p PROJECT_ID)"
 
-$ gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:${SERVICE_ACCOUNT}" \
-    --role='roles/pubsub.publisher'
+$ gcloud projects add-iam-policy-binding PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT}" --role='roles/pubsub.publisher'
 ```
 
 ### Create a BigQuery dataset
